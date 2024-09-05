@@ -1,0 +1,53 @@
+---
+title: "TD 4 - Régression linéaire, régression logistique"
+author: "Nel Hervé"
+date: "2024-09-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Régression linéaire
+
+Le jeu de données mtcars, disponible de base sur R, contient des mesures de consommation de carburant, de design et de performance pour 32 voitures.
+
+On se propose d'ajuster un modèle linéaire permettant d'expliquer la consommation de carburant par les caractéristiques de la voiture.
+
+1. Importer et pré-traiter le jeu de données mtcars afin que chaque variable soit d'un type adapté.
+
+2. Ajuster un modèle pour expliquer la consommation de carburant d'un véhicule par ses caractéristiques.
+
+*La question est volontairement large. N'hésitez pas à utiliser tous les outils du guide, voire d'en chercher d'autres : anova, Anova...*
+
+*Il s'agit également d'une tâche d'explication et non de prédiction. Vos analyses doivent en tenir compte.*
+
+
+# Régression logistique
+
+Le jeu de données weatherMelbourne (disponible dans le dossier data) contient des relevés météo quotidiens pour la ville de Melbourne. Pour chaque jour, les variables mesurées sont les suivantes :
+
+* MinTemp, MaxTemp : températures minimale et maximale
+* Rainfall : précipitations
+* Evaporation : évaporation
+* Sunshine : ensoleillement
+* WindGustSpeed : vitesse de la plus forte rafale
+* WindDir9am, WindDir3pm : direction du vent à 9h et 15h
+* WindSpeed9am, WindSpeed3pm : vitesse du vent à 9h et 15h
+* Humidity9am, Humidity3pm : humidité à 9h et 15h
+* Pressure9am, Pressure3pm : pression atmosphérique à 9h et 15h
+* Cloud9am, Cloud3pm : couverture nuageuse à 9h et 15h
+* Temp9am, Temp3pm : température à 9h et 15h
+* RainToday : a-t-il plu ce jour ?
+* RainTomorrow : a-t-il plu le lendemain ?
+
+On souhaite prédire, au vu de ces variables, la météo d'un jour sur l'autre.
+
+
+1. Importer et pré-traiter le jeu de données afin que chaque variable soit d'un type adapté.
+
+2. Ajuster le meilleur modèle possible pour prédire, à partir des relevés d'un jour, la météo du lendemain.
+
+
+*La question est volontairement large. N'hésitez pas à utiliser tous les outils du guide, voire d'en chercher d'autres : anova et/ou Anova, erreur de classification K-fold (packages glmnet et boot)...*

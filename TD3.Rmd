@@ -1,0 +1,195 @@
+---
+title: "TD 3 - Structures de contrôle et fonctions"
+author: "Nel Hervé"
+date: "2024-09-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Structures de contrôle
+
+## Boucle if
+
+```{r}
+n = 81
+n
+
+# premier exemple : n est-il pair ?
+if (n%%2 == 0){
+  print('Pair')
+} else {
+  print('Impair')
+}
+
+# deuxième exemple : n est-il un carré parfait ?
+if (sqrt(n) == as.integer(sqrt(n))){
+  print('Carré parfait')
+} else {
+  print('Pas un carré parfait')
+}
+```
+
+## Boucle for
+
+```{r}
+# exemple : illustrer la convergence de la suite des (1 + 1/n)^n vers e
+
+# création d'un graphique vide :
+plot(NULL, xlim = c(0, 50), ylim = c(0, 4), xlab = 'n', ylab = 'e(n)')
+
+# tracé, en pointillés, d'une droite horizontale à y = e :
+x = seq(0, 50, length.out = 1000)
+lines(x = x, y = rep(exp(1), 1000), col = 'red', lwd = 2.5, lty = 2)
+
+# ajout des points correpondant à la suite :
+for (n in c(1:50)){
+  e = (1 + 1/n)**n
+  points(x = n, y = e)
+}
+```
+
+### Exercice 1
+
+On place 1000€ sur un compte épargne. Le taux d'intérêt est de 0.5% par an. Quelle somme a-t-on gagné au bout de 10 ans ?
+
+
+
+## Boucle while
+
+```{r}
+# créons un programme capable de déterminer la puissance de 2 dans la décomposition en produit de facteurs premiers d'un nombre n :
+n = 48
+k = 0
+
+while (n%%2 == 0){
+  k = k+1
+  n = n/2
+}
+
+k
+```
+
+### Exercice 2
+
+On se propose l'expérience suivante : un participant choisit un nombre "mystère" entre 1 et 100. Un autre participant essaie ensuite de deviner ce nombre ; il fait une proposition, et s'il ne devine pas le nombre mystère, il tente un autre nombre, jusqu'à tomber sur le bon résultat. 
+
+On compte le nombre de tentatives qu'il faut au second participant pour deviner le nombre mystère.
+
+1. Créer un programme illustrant cette expérience, qui affiche le nombre de tentatives.
+
+*Indice : pour tirer un nombre aléatoire entre 1 et k, on utilise la fonction sample (voir help(sample) ou ?sample)*
+
+
+Bonus : En utilisant le programme précédent, répéter l'expérience 1000 fois, et donner le nombre moyen de tentatives avant d'arriver au bon résultat.
+
+
+
+## Boucle repeat
+```{r}
+# on reprend le programme exemple de la boucle while : 
+
+n = 48
+k = 0
+
+repeat{
+  if (n%%2 == 1) break
+  k = k+1
+  n = n/2
+}
+
+k
+```
+
+### Exercice 3
+
+On choisit un nombre entier, et on se donne l'algorithme suivant :
+
+* si le nombre est pair, le diviser par 2 ; 
+* sinon, le multiplier par 3 et ajouter 1.
+
+On répète l'algorithme sur le nombre obtenu jusqu'à ce qu'on arrive à 1 (ce qui, selon la conjecture de Syracuse, finira forcément par arriver).
+
+
+Créer un programme affichant, pour un nombre donné :
+
+* le vecteur des valeurs calculées par l'algorithme ;
+* le nombre d'itérations nécessaires pour arriver à 1.
+
+
+# Création de fonctions
+
+```{r}
+# en reprenant à nouveau l'exemple précédent, on crée une fonction capable de donner, pour n'importe quel nombre, la puissance de 2 dans sa décomposition en produit de facteurs premiers :
+
+puiss_2 = function(n){
+  k=0
+  
+  while (n%%2 == 0){
+  k = k+1
+  n = n/2
+  }
+  return(k)
+}
+
+puiss_2(48)
+puiss_2(6)
+```
+
+### Exercice 4
+
+1. Reprendre l'exercice 1 et créer une fonction généralisant le calcul à n'importe quels montant initial, taux et nombre d'années.
+
+2. Reprendre l'exercice 2 et créer une fonction permettant de calculer, pour un nombre de répétitions donné, le nombre moyen de tentatives nécessaires pour deviner le nombre mystère.
+
+
+### Exercice 5
+
+On reprend l'algorithme de l'exercice 3.
+
+1. Créer une fonction qui donne, pour un nombre donné, le nombre d'itérations nécessaires pour arriver à 1. 
+
+2. Représenter les résultats précédents dans un graphique, pour des nombres allant de 2 à 100.
+
+3. Quel nombre requiert le plus d'itérations avant d'arriver à 1 ? Repasser le point en rouge sur le graphique.
+
+
+
+## Avertissements et erreurs
+
+```{r}
+# on se propose de recoder la fonction factorial, qui calcule n! pour un nombre n donné.
+# ici, si l'argument de la fonction est un nombre entier, elle s'exécute ; si c'est un décimal, elle affiche un avertissement, et prend l'arrondi ; si c'est un nombre négatif, elle s'arrête avec un message d'erreur.
+
+fact = function(n){
+  if (n != as.integer(n)){
+    warning("Nombre décimal, arrondi à l'entier le plus proche \n")
+    n = floor(n)
+  }
+  if (n == 0){
+    return(1)
+  }
+  if (n < 0){
+    stop('Factorielle non définie pour des nombres négatifs')
+  }
+  k = 1
+  for (i in c(1:n)){
+    k = k*i
+  }
+  return(k)
+}
+
+fact(0)
+fact(5)
+fact(4.3)
+```
+
+
+```{r, error = T}
+fact(-1)
+```
+
+

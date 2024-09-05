@@ -1,0 +1,56 @@
+---
+title: "TD 2 - Graphiques"
+author: "Nel Hervé"
+date: "2024-09-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Graphiques en R de base
+
+```{r}
+# tracé de la fonction sinus :
+x = seq(-pi, pi, length.out = 50)
+y = sin(x)
+
+plot(x, y, type = 'l')    # ligne
+plot(x, y, type = 'o')    # points reliés
+
+plot(x, y, main = 'Graphe de la fonction sinus')
+# par défaut : points seuls
+```
+
+```{r}
+z = cos(x)
+
+# superposition de 2 graphiques : plot pour le premier, lines pour le second
+plot(y~x, type = 'l', lty = 2)
+lines(z~x, col = 'red')
+
+# ajout d'une légende :
+legend('topleft', legend = c('y = cos(x)', 'y = sin(x)'), bty = 'n', text.col = c('red', 'black'))
+```
+
+### Exercice 1
+
+1. Charger le jeu de données "iris" (avec *data*).
+
+2. Représenter les longueurs des sépales en fonction des longueurs des pétales des iris.
+
+3. Représenter les longueurs des pétales en fonction de l'espèce d'iris.
+
+*Remarque : le type de graphique s'adapte aux types de données !*
+
+4. Reprendre le graphique de la question 2, mais en colorant les points selon l'espèce de l'iris.
+
+*Indice : séparer le jeu de données en 3, et utiliser points().*
+
+
+
+# Graphiques GGplot
+
+Cf l'excellent tutoriel de Laurent Rouvière : https://rouviere.pages.math.cnrs.fr/TUTO_R/07-ggplot.html
+

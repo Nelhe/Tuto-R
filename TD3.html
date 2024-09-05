@@ -11,9 +11,9 @@
 
 <meta name="author" content="Nel Hervé" />
 
-<meta name="date" content="2024-09-04" />
+<meta name="date" content="2024-09-05" />
 
-<title>TD 1 - Objets R et manipulations de base</title>
+<title>TD 3 - Structures de contrôle et fonctions</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,767 +350,199 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">TD 1 - Objets R et manipulations de
-base</h1>
+<h1 class="title toc-ignore">TD 3 - Structures de contrôle et
+fonctions</h1>
 <h4 class="author">Nel Hervé</h4>
-<h4 class="date">2024-09-04</h4>
+<h4 class="date">2024-09-05</h4>
 
 </div>
 
 
-<div id="utilisation-de-laide" class="section level1">
-<h1>Utilisation de l’aide</h1>
-<pre class="r"><code># ouverture de la documentation pour une fonction précise :
-help(mean)
-# ou :
-?mean
-
-# recherche d&#39;un terme dans toutes les documentations :
-help.search(&quot;mean&quot;)
-# ou :
-??mean</code></pre>
+<div id="structures-de-contrôle" class="section level1">
+<h1>Structures de contrôle</h1>
+<div id="boucle-if" class="section level2">
+<h2>Boucle if</h2>
+<pre class="r"><code>n = 81
+n</code></pre>
+<pre><code>## [1] 81</code></pre>
+<pre class="r"><code># premier exemple : n est-il pair ?
+if (n%%2 == 0){
+  print(&#39;Pair&#39;)
+} else {
+  print(&#39;Impair&#39;)
+}</code></pre>
+<pre><code>## [1] &quot;Impair&quot;</code></pre>
+<pre class="r"><code># deuxième exemple : n est-il un carré parfait ?
+if (sqrt(n) == as.integer(sqrt(n))){
+  print(&#39;Carré parfait&#39;)
+} else {
+  print(&#39;Pas un carré parfait&#39;)
+}</code></pre>
+<pre><code>## [1] &quot;Carré parfait&quot;</code></pre>
 </div>
-<div id="calculs-simples" class="section level1">
-<h1>Calculs simples</h1>
-<pre class="r"><code>1+3/5*5</code></pre>
-<pre><code>## [1] 4</code></pre>
-<pre class="r"><code>exp(2)</code></pre>
-<pre><code>## [1] 7.389056</code></pre>
-<pre class="r"><code>log(8)</code></pre>
-<pre><code>## [1] 2.079442</code></pre>
-<pre class="r"><code>log(8, base = 2)</code></pre>
-<pre><code>## [1] 3</code></pre>
-<pre class="r"><code>factorial(5)</code></pre>
-<pre><code>## [1] 120</code></pre>
-<pre class="r"><code>pi</code></pre>
-<pre><code>## [1] 3.141593</code></pre>
-<pre class="r"><code>sin(5*pi)</code></pre>
-<pre><code>## [1] 6.123032e-16</code></pre>
-<pre class="r"><code>0.1+0.2 == 0.3</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code># parfois, R se trompe sur des tests d&#39;égalité - pour des raisons de stockage et d&#39;arrondis.
-# alternative qui marche mieux :
-all.equal(0.1+0.2, 0.3)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-</div>
-<div id="mode-dun-objet" class="section level1">
-<h1>Mode d’un objet</h1>
-<pre class="r"><code>a = 2
-mode(a)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>typeof(a)</code></pre>
-<pre><code>## [1] &quot;double&quot;</code></pre>
-<pre class="r"><code>b = pi
-mode(b)</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>TRUE &amp; FALSE</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code># on peut abréger TRUE en T et FALSE en F :
-T &amp; F</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-<pre class="r"><code>5&gt;2 | 1 == 0</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>8 != 5+4</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>c = NA
+<div id="boucle-for" class="section level2">
+<h2>Boucle for</h2>
+<pre class="r"><code># exemple : illustrer la convergence de la suite des (1 + 1/n)^n vers e
 
-is.na(c)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-</div>
-<div id="vecteurs" class="section level1">
-<h1>Vecteurs</h1>
-<pre class="r"><code>x = c(1,2,3)
-x</code></pre>
-<pre><code>## [1] 1 2 3</code></pre>
-<pre class="r"><code>typeof(x)</code></pre>
-<pre><code>## [1] &quot;double&quot;</code></pre>
-<pre class="r"><code>is.vector(x)</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>y = 1:3
-y2 = -1:3
-y3 = -pi:3
+# création d&#39;un graphique vide :
+plot(NULL, xlim = c(0, 50), ylim = c(0, 4), xlab = &#39;n&#39;, ylab = &#39;e(n)&#39;)
 
-y</code></pre>
-<pre><code>## [1] 1 2 3</code></pre>
-<pre class="r"><code>y2</code></pre>
-<pre><code>## [1] -1  0  1  2  3</code></pre>
-<pre class="r"><code>y3</code></pre>
-<pre><code>## [1] -3.1415927 -2.1415927 -1.1415927 -0.1415927  0.8584073  1.8584073  2.8584073</code></pre>
-<pre class="r"><code>x = 1:5
-y = seq(2,10,by=2)
+# tracé, en pointillés, d&#39;une droite horizontale à y = e :
+x = seq(0, 50, length.out = 1000)
+lines(x = x, y = rep(exp(1), 1000), col = &#39;red&#39;, lwd = 2.5, lty = 2)
 
-# calculs élément par élément :
-x + y</code></pre>
-<pre><code>## [1]  3  6  9 12 15</code></pre>
-<pre class="r"><code>log(x)</code></pre>
-<pre><code>## [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379</code></pre>
-<pre class="r"><code>x*y</code></pre>
-<pre><code>## [1]  2  8 18 32 50</code></pre>
-<pre class="r"><code># produit scalaire :
-x%*%y</code></pre>
-<pre><code>##      [,1]
-## [1,]  110</code></pre>
-<pre class="r"><code>y</code></pre>
-<pre><code>## [1]  2  4  6  8 10</code></pre>
-<pre class="r"><code># sélection d&#39;un élément par indice :
-y[2]</code></pre>
-<pre><code>## [1] 4</code></pre>
-<pre class="r"><code>y[1:3]  #équivaut à y[c(1,2,3)] ou y[c(1:3)]</code></pre>
-<pre><code>## [1] 2 4 6</code></pre>
-<pre class="r"><code># sélection d&#39;éléments par condition :
-y[y&gt;5]</code></pre>
-<pre><code>## [1]  6  8 10</code></pre>
-<pre class="r"><code># répétition d&#39;une valeur :
-rep(&quot;hello&quot;,10)</code></pre>
-<pre><code>##  [1] &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot; &quot;hello&quot;
-## [10] &quot;hello&quot;</code></pre>
-<pre class="r"><code># répétition d&#39;un motif :
-rep(c(3,7),4)</code></pre>
-<pre><code>## [1] 3 7 3 7 3 7 3 7</code></pre>
-<pre class="r"><code># séquence de 0 à 1, avec un nombre de valeurs donné :
-seq(0,1,length.out=15)</code></pre>
-<pre><code>##  [1] 0.00000000 0.07142857 0.14285714 0.21428571 0.28571429 0.35714286
-##  [7] 0.42857143 0.50000000 0.57142857 0.64285714 0.71428571 0.78571429
-## [13] 0.85714286 0.92857143 1.00000000</code></pre>
-<pre class="r"><code># séquence de 0 à 1, avec un pas donné :
-seq(0,1,by=0.1)</code></pre>
-<pre><code>##  [1] 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0</code></pre>
-<pre class="r"><code># collage de vecteurs entre eux :
-paste(&quot;x&quot;, 1:3, sep = &#39;_&#39;)</code></pre>
-<pre><code>## [1] &quot;x_1&quot; &quot;x_2&quot; &quot;x_3&quot;</code></pre>
+# ajout des points correpondant à la suite :
+for (n in c(1:50)){
+  e = (1 + 1/n)**n
+  points(x = n, y = e)
+}</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAMAAADDuCPrAAAA0lBMVEUAAAAAACsAAFUAKysAK1UAK4AAVaorAAArKwArKysrK1UrK4ArVVUrVYArVaorgNRVAABVKwBVKytVK1VVVStVVVVVVYBVgKpVgNRVqtRVqv+AKwCAKyuAVSuAVVWAgCuAgICAgKqAqqqAqtSAqv+A1P+qVQCqVSuqgCuqgFWqgICqgKqqqoCqqqqqqtSq1ICq1Kqq1NSq1P+q///UgCvUgFXUqlXUqoDUqqrU1IDU1KrU1NTU1P/U////AAD/qlX/1ID/1Kr/1NT//6r//9T///+ugLfDAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAceklEQVR4nO3d/2PT5oHHcYXRpnSlfNlYVzp2d+WAcTd6V8jaXimBlPj//5fOshNbduxgf6xIfuTX64fNqE9kPYnyjmzJdjUCIFL1vQEApRJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoQEFCAkoAAhAQUICShASEABQgIKEBJQgJCAAoT2O6AVQGvaT1Tra2xR399tYFhab1Tb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QEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQKiggH68X61y6802GyegQGsEFCBUUEBHZw+2DOiq4Te2dcDBKSmgo/PvqureFuMFFLhJRQV0UtDHu6xAQIH2lBXQ+nnQrZ7zXCagQHsKC+jo/XYP4pcJKNCe0gI6fhC/yyGogALtKS2gow+PHv1n/tUCCrSnuIDuRkCB9ggoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKEBBQgJKAAIQEFCAkoQEhAAUICChASUICQgAKECgzo+dtfXr169cPbd8HXCijQntIC+uuTau7uj9t+uYAC7SkroGcPqkW3n223AgEF2lNUQN8f19G882jqi/ofR4+3WoOAAu0pKaAf74+D+bSx4OdxUG+92WYVAgq0p6SAnlzJZZ3Ue9usQkCB9hQU0PPvqmr5Afv7qvpsm7PxAgq0p6CAjg83rzxeX7WssSkr3NTWAYdHQAFCBQV0/BD+6NnSMg/hgf4UFNDR8yu1rJ8W/XybVQgo0J6SAvrheFzQ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" width="672" /></p>
 <div id="exercice-1" class="section level3">
 <h3>Exercice 1</h3>
-<ol style="list-style-type: decimal">
-<li><p>Créer le vecteur <span class="math inline">\(v_1\)</span> : <span class="math inline">\(v_1 = (5,6,7,...,23)\)</span>.</p></li>
-<li><p>Créer le vecteur <span class="math inline">\(v_2\)</span> : <span class="math inline">\(v_2 = (6,8,10,...,20)\)</span>.</p></li>
-<li><p>Créer, de deux manières différentes, le vecteur <span class="math inline">\(v_3\)</span> : <span class="math inline">\(v_3 =
-(0, 0.01, 0.02, ..., 1)\)</span></p></li>
-<li><p>Créer le vecteur <span class="math inline">\(v_4\)</span> : <span class="math inline">\(v_4 =
-(1,2,3,4,5,1,2,3,4,5,1,2,3,4,5,1,2,3,4,5)\)</span></p></li>
-<li><p>Créer le vecteur <span class="math inline">\(v_5\)</span> : <span class="math inline">\(v_5 = (1,1,1,2,2,2,3,3,3,4,4,4)\)</span></p></li>
-</ol>
-<p><em>Indication : utiliser le paramètre “each” de la fonction
-rep</em></p>
-<ol start="6" style="list-style-type: decimal">
-<li><p>Créer le vecteur <span class="math inline">\(v_6\)</span> : <span class="math inline">\(v_6 = (1,1,2,2,2,3,3,3,3)\)</span></p></li>
-<li><p>Créer le vecteur <span class="math inline">\(v_7\)</span> : <span class="math inline">\(v_7 = (Individu1, ...
-Individu100)\)</span></p></li>
-<li><p>Créer un vecteur qui contient, dans l’ordre, la lettre A une
-fois, la lettre B deux fois, etc. jusqu’à la lettre Z vingt-six
-fois.</p></li>
-</ol>
-<p><em>Indication : utiliser LETTERS</em></p>
+<p>On place 1000€ sur un compte épargne. Le taux d’intérêt est de 0.5%
+par an. Quelle somme a-t-on gagné au bout de 10 ans ?</p>
 </div>
+</div>
+<div id="boucle-while" class="section level2">
+<h2>Boucle while</h2>
+<pre class="r"><code># créons un programme capable de déterminer la puissance de 2 dans la décomposition en produit de facteurs premiers d&#39;un nombre n :
+n = 48
+k = 0
+
+while (n%%2 == 0){
+  k = k+1
+  n = n/2
+}
+
+k</code></pre>
+<pre><code>## [1] 4</code></pre>
 <div id="exercice-2" class="section level3">
 <h3>Exercice 2</h3>
+<p>On se propose l’expérience suivante : un participant choisit un
+nombre “mystère” entre 1 et 100. Un autre participant essaie ensuite de
+deviner ce nombre ; il fait une proposition, et s’il ne devine pas le
+nombre mystère, il tente un autre nombre, jusqu’à tomber sur le bon
+résultat.</p>
+<p>On compte le nombre de tentatives qu’il faut au second participant
+pour deviner le nombre mystère.</p>
 <ol style="list-style-type: decimal">
-<li><p>Créer le vecteur z : <span class="math inline">\(z = (1,2.5,3.9,
-\pi)\)</span></p></li>
-<li><p>Afficher la longueur du vecteur z, son minimum et son
-maximum.</p></li>
-<li><p>Afficher l’indice du minimum et l’indice du maximum de
-z.</p></li>
-<li><p>Ranger z par ordre croissant.</p></li>
-<li><p>Utiliser la fonction <em>summary()</em> sur z.</p></li>
-<li><p>Ajouter 8 à la fin du vecteur z.</p></li>
-<li><p>Sélectionner le deuxième élément de z.</p></li>
-<li><p>Sélectionner les 3 premiers éléments de z (avec les indices, puis
-avec la fonction <em>head()</em>).</p></li>
-<li><p>Utiliser z pour afficher le vecteur <span class="math inline">\((2.5,2.5,1,3.9)\)</span>.</p></li>
+<li>Créer un programme illustrant cette expérience, qui affiche le
+nombre de tentatives.</li>
 </ol>
-<p><em>Indice : utiliser la sélection par indices.</em></p>
-<ol start="10" style="list-style-type: decimal">
-<li><p>Retirer le premier élément de z.</p></li>
-<li><p>Retirer les deux derniers éléments de z.</p></li>
-</ol>
+<p><em>Indice : pour tirer un nombre aléatoire entre 1 et k, on utilise
+la fonction sample (voir help(sample) ou ?sample)</em></p>
+<p>Bonus : En utilisant le programme précédent, répéter l’expérience
+1000 fois, et donner le nombre moyen de tentatives avant d’arriver au
+bon résultat.</p>
 </div>
+</div>
+<div id="boucle-repeat" class="section level2">
+<h2>Boucle repeat</h2>
+<pre class="r"><code># on reprend le programme exemple de la boucle while : 
+
+n = 48
+k = 0
+
+repeat{
+  if (n%%2 == 1) break
+  k = k+1
+  n = n/2
+}
+
+k</code></pre>
+<pre><code>## [1] 4</code></pre>
 <div id="exercice-3" class="section level3">
 <h3>Exercice 3</h3>
-<ol style="list-style-type: decimal">
-<li><p>Créer le vecteur v : <span class="math inline">\(v =
-(1,2,3,4,5,NA,1,2,3,4,5,NA,1,2,3,4,5,NA)\)</span></p></li>
-<li><p>Remplacer les valeurs NA de v par -1.</p></li>
-<li><p>Supprimer les éléments de v compris entre 3 et 5.</p></li>
-<li><p>Changer les -1 de v en 1.</p></li>
-<li><p>Ajouter les nombres 6, 7, 8 et 9 à la fin de v.</p></li>
-<li><p>Supprimer les 3 premiers éléments de v.</p></li>
-<li><p>Donner le maximum des éléments de v, et son indice.</p></li>
-<li><p>Ajouter 1 à tous les éléments de v.</p></li>
-</ol>
+<p>On choisit un nombre entier, et on se donne l’algorithme suivant
+:</p>
+<ul>
+<li>si le nombre est pair, le diviser par 2 ;</li>
+<li>sinon, le multiplier par 3 et ajouter 1.</li>
+</ul>
+<p>On répète l’algorithme sur le nombre obtenu jusqu’à ce qu’on arrive à
+1 (ce qui, selon la conjecture de Syracuse, finira forcément par
+arriver).</p>
+<p>Créer un programme affichant, pour un nombre donné :</p>
+<ul>
+<li>le vecteur des valeurs calculées par l’algorithme ;</li>
+<li>le nombre d’itérations nécessaires pour arriver à 1.</li>
+</ul>
 </div>
 </div>
-<div id="matrices" class="section level1">
-<h1>Matrices</h1>
-<pre class="r"><code># données rangées par colonne par défaut :
-A = matrix(1:15,ncol=3,nrow=5)
-A</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    6   11
-## [2,]    2    7   12
-## [3,]    3    8   13
-## [4,]    4    9   14
-## [5,]    5   10   15</code></pre>
-<pre class="r"><code># données rangées par ligne :
-B = matrix(1:15,ncol=3,nrow=5,byrow=TRUE)
-B</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]    1    2    3
-## [2,]    4    5    6
-## [3,]    7    8    9
-## [4,]   10   11   12
-## [5,]   13   14   15</code></pre>
-<pre class="r"><code># transposée :
-t(A)</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]    1    2    3    4    5
-## [2,]    6    7    8    9   10
-## [3,]   11   12   13   14   15</code></pre>
-<pre class="r"><code># produit matriciel :
-t(A) %*% B</code></pre>
-<pre><code>##      [,1] [,2] [,3]
-## [1,]  135  150  165
-## [2,]  310  350  390
-## [3,]  485  550  615</code></pre>
-<pre class="r"><code># matrice identité 5x5
-C = diag(5)
-C</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]    1    0    0    0    0
-## [2,]    0    1    0    0    0
-## [3,]    0    0    1    0    0
-## [4,]    0    0    0    1    0
-## [5,]    0    0    0    0    1</code></pre>
-<pre class="r"><code># en réutilisant diag, on obtient le vecteur des valeurs de la diagonale :
-diag(C)</code></pre>
-<pre><code>## [1] 1 1 1 1 1</code></pre>
-<pre class="r"><code># et en utilisant diag sur un vecteur, on crée une matrice diagonale :
-D = diag(1:5)
-D</code></pre>
-<pre><code>##      [,1] [,2] [,3] [,4] [,5]
-## [1,]    1    0    0    0    0
-## [2,]    0    2    0    0    0
-## [3,]    0    0    3    0    0
-## [4,]    0    0    0    4    0
-## [5,]    0    0    0    0    5</code></pre>
-<pre class="r"><code># matrice inverse :
-solve(D)</code></pre>
-<pre><code>##      [,1] [,2]      [,3] [,4] [,5]
-## [1,]    1  0.0 0.0000000 0.00  0.0
-## [2,]    0  0.5 0.0000000 0.00  0.0
-## [3,]    0  0.0 0.3333333 0.00  0.0
-## [4,]    0  0.0 0.0000000 0.25  0.0
-## [5,]    0  0.0 0.0000000 0.00  0.2</code></pre>
+</div>
+<div id="création-de-fonctions" class="section level1">
+<h1>Création de fonctions</h1>
+<pre class="r"><code># en reprenant à nouveau l&#39;exemple précédent, on crée une fonction capable de donner, pour n&#39;importe quel nombre, la puissance de 2 dans sa décomposition en produit de facteurs premiers :
+
+puiss_2 = function(n){
+  k=0
+  
+  while (n%%2 == 0){
+  k = k+1
+  n = n/2
+  }
+  return(k)
+}
+
+puiss_2(48)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>puiss_2(6)</code></pre>
+<pre><code>## [1] 1</code></pre>
 <div id="exercice-4" class="section level3">
 <h3>Exercice 4</h3>
 <ol style="list-style-type: decimal">
-<li>Créer la matrice A suivante :</li>
-</ol>
-<span class="math display">\[\begin{bmatrix}
-7 &amp; 14 &amp; 21 &amp; 28 &amp; 35 \\
-8 &amp; 16 &amp; 24 &amp; 32 &amp; 40 \\
-9 &amp; 18 &amp; 27 &amp; 36 &amp; 45 \\
-10 &amp; 20 &amp; 30 &amp; 40 &amp; 50 \\
-11 &amp; 22 &amp; 33 &amp; 44 &amp; 55 \\
-12 &amp; 24 &amp; 36 &amp; 48 &amp; 60 \\
-\end{bmatrix}\]</span>
-<p><em>Indice : il y a plusieurs moyens de créer la matrice sans écrire
-chaque valeur à la main !</em></p>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Afficher les dimensions de la matrice A.</p></li>
-<li><p>Afficher l’élément à la 3ème ligne, 5ème colonne de A.</p></li>
-<li><p>Afficher la 3ème colonne de A.</p></li>
-<li><p>Supprimer la 2ème ligne de A.</p></li>
-<li><p>Changer toutes les valeurs de la 4ème ligne de A en
-zéros.</p></li>
-<li><p>Calculer la moyenne de la première ligne de A.</p></li>
-<li><p>Calculer les moyennes par ligne de A. On pourra utiliser la
-fonction <em>apply</em>.</p></li>
-<li><p>Remplacer tous les nombres impairs de la matrice A en
-NA.</p></li>
-<li><p>Ajouter une colonne de zéros à A.</p></li>
-<li><p>Transformer A en une matrice de dimensions (3,10).</p></li>
+<li><p>Reprendre l’exercice 1 et créer une fonction généralisant le
+calcul à n’importe quels montant initial, taux et nombre
+d’années.</p></li>
+<li><p>Reprendre l’exercice 2 et créer une fonction permettant de
+calculer, pour un nombre de répétitions donné, le nombre moyen de
+tentatives nécessaires pour deviner le nombre mystère.</p></li>
 </ol>
 </div>
-</div>
-<div id="listes" class="section level1">
-<h1>Listes</h1>
-<pre class="r"><code>p = list(&quot;Martin&quot;, c(&quot;Pierre&quot;,&quot;Alain&quot;,&quot;Nicolas&quot;), 1972)
-# si aucune clé n&#39;est précisée, les clés sont 1, 2, 3...
-
-# deux crochets permettent de sélectionner la valeur associée à la 2ème clé :
-p[[2]]</code></pre>
-<pre><code>## [1] &quot;Pierre&quot;  &quot;Alain&quot;   &quot;Nicolas&quot;</code></pre>
-<pre class="r"><code>typeof(p[[2]])</code></pre>
-<pre><code>## [1] &quot;character&quot;</code></pre>
-<pre class="r"><code>length(p[[2]])</code></pre>
-<pre><code>## [1] 3</code></pre>
-<pre class="r"><code># un seul crochet permet de sélectionner un couple clé/valeur, qui est lui-même une liste :
-p[2]</code></pre>
-<pre><code>## [[1]]
-## [1] &quot;Pierre&quot;  &quot;Alain&quot;   &quot;Nicolas&quot;</code></pre>
-<pre class="r"><code>typeof(p[2])</code></pre>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<pre class="r"><code>length(p[2])</code></pre>
-<pre><code>## [1] 1</code></pre>
-<pre class="r"><code># on peut enchaîner les crochets :
-p[[2]][3]</code></pre>
-<pre><code>## [1] &quot;Nicolas&quot;</code></pre>
-<pre class="r"><code># avec des clés personnalisées, on peut accéder à une valeur grâce au $ :
-p2 = list(nom=&quot;Martin&quot;,prenoms=c(&quot;Pierre&quot;,&quot;Alain&quot;,&quot;Nicolas&quot;),annee=1972)
-
-names(p2)</code></pre>
-<pre><code>## [1] &quot;nom&quot;     &quot;prenoms&quot; &quot;annee&quot;</code></pre>
-<pre class="r"><code>p2$prenoms</code></pre>
-<pre><code>## [1] &quot;Pierre&quot;  &quot;Alain&quot;   &quot;Nicolas&quot;</code></pre>
 <div id="exercice-5" class="section level3">
 <h3>Exercice 5</h3>
+<p>On reprend l’algorithme de l’exercice 3.</p>
 <ol style="list-style-type: decimal">
-<li><p>Créer une liste L correspondant à une chanson de votre choix,
-avec les clés suivantes : titre, artiste et année.</p></li>
-<li><p>Retirer le couple clé/valeur lié à l’artiste.</p></li>
-</ol>
-<p><em>Indice : pour retirer une clé et sa valeur associée, on utilise
-la syntaxe within(nom_de_la_liste, rm(nom_de_la_clé))</em></p>
-<ol start="3" style="list-style-type: decimal">
-<li>Ajouter une clé “durée” avec la durée, en secondes, de la
-chanson.</li>
+<li><p>Créer une fonction qui donne, pour un nombre donné, le nombre
+d’itérations nécessaires pour arriver à 1.</p></li>
+<li><p>Représenter les résultats précédents dans un graphique, pour des
+nombres allant de 2 à 100.</p></li>
+<li><p>Quel nombre requiert le plus d’itérations avant d’arriver à 1 ?
+Repasser le point en rouge sur le graphique.</p></li>
 </ol>
 </div>
-</div>
-<div id="data-frames" class="section level1">
-<h1>Data frames</h1>
-<pre class="r"><code># chargement d&#39;un jeu de données de base de R :
-data(iris)
+<div id="avertissements-et-erreurs" class="section level2">
+<h2>Avertissements et erreurs</h2>
+<pre class="r"><code># on se propose de recoder la fonction factorial, qui calcule n! pour un nombre n donné.
+# ici, si l&#39;argument de la fonction est un nombre entier, elle s&#39;exécute ; si c&#39;est un décimal, elle affiche un avertissement, et prend l&#39;arrondi ; si c&#39;est un nombre négatif, elle s&#39;arrête avec un message d&#39;erreur.
 
-# informations basiques :
-dim(iris)</code></pre>
-<pre><code>## [1] 150   5</code></pre>
-<pre class="r"><code>names(iris)</code></pre>
-<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;  &quot;Species&quot;</code></pre>
-<pre class="r"><code>summary(iris)</code></pre>
-<pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
-##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
-##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
-##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
-##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
-##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
-##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-##        Species  
-##  setosa    :50  
-##  versicolor:50  
-##  virginica :50  
-##                 
-##                 
-## </code></pre>
-<pre class="r"><code># sélection de lignes :
-iris[5,]</code></pre>
-<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 5            5         3.6          1.4         0.2  setosa</code></pre>
-<pre class="r"><code>iris[iris$Species == &quot;setosa&quot;,] # la virgule est importante : on garde toutes les colonnes</code></pre>
-<pre><code>##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1           5.1         3.5          1.4         0.2  setosa
-## 2           4.9         3.0          1.4         0.2  setosa
-## 3           4.7         3.2          1.3         0.2  setosa
-## 4           4.6         3.1          1.5         0.2  setosa
-## 5           5.0         3.6          1.4         0.2  setosa
-## 6           5.4         3.9          1.7         0.4  setosa
-## 7           4.6         3.4          1.4         0.3  setosa
-## 8           5.0         3.4          1.5         0.2  setosa
-## 9           4.4         2.9          1.4         0.2  setosa
-## 10          4.9         3.1          1.5         0.1  setosa
-## 11          5.4         3.7          1.5         0.2  setosa
-## 12          4.8         3.4          1.6         0.2  setosa
-## 13          4.8         3.0          1.4         0.1  setosa
-## 14          4.3         3.0          1.1         0.1  setosa
-## 15          5.8         4.0          1.2         0.2  setosa
-## 16          5.7         4.4          1.5         0.4  setosa
-## 17          5.4         3.9          1.3         0.4  setosa
-## 18          5.1         3.5          1.4         0.3  setosa
-## 19          5.7         3.8          1.7         0.3  setosa
-## 20          5.1         3.8          1.5         0.3  setosa
-## 21          5.4         3.4          1.7         0.2  setosa
-## 22          5.1         3.7          1.5         0.4  setosa
-## 23          4.6         3.6          1.0         0.2  setosa
-## 24          5.1         3.3          1.7         0.5  setosa
-## 25          4.8         3.4          1.9         0.2  setosa
-## 26          5.0         3.0          1.6         0.2  setosa
-## 27          5.0         3.4          1.6         0.4  setosa
-## 28          5.2         3.5          1.5         0.2  setosa
-## 29          5.2         3.4          1.4         0.2  setosa
-## 30          4.7         3.2          1.6         0.2  setosa
-## 31          4.8         3.1          1.6         0.2  setosa
-## 32          5.4         3.4          1.5         0.4  setosa
-## 33          5.2         4.1          1.5         0.1  setosa
-## 34          5.5         4.2          1.4         0.2  setosa
-## 35          4.9         3.1          1.5         0.2  setosa
-## 36          5.0         3.2          1.2         0.2  setosa
-## 37          5.5         3.5          1.3         0.2  setosa
-## 38          4.9         3.6          1.4         0.1  setosa
-## 39          4.4         3.0          1.3         0.2  setosa
-## 40          5.1         3.4          1.5         0.2  setosa
-## 41          5.0         3.5          1.3         0.3  setosa
-## 42          4.5         2.3          1.3         0.3  setosa
-## 43          4.4         3.2          1.3         0.2  setosa
-## 44          5.0         3.5          1.6         0.6  setosa
-## 45          5.1         3.8          1.9         0.4  setosa
-## 46          4.8         3.0          1.4         0.3  setosa
-## 47          5.1         3.8          1.6         0.2  setosa
-## 48          4.6         3.2          1.4         0.2  setosa
-## 49          5.3         3.7          1.5         0.2  setosa
-## 50          5.0         3.3          1.4         0.2  setosa</code></pre>
-<pre class="r"><code># sélection de colonnes :
-iris[,2]    # sortie : un vecteur</code></pre>
-<pre><code>##   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9 3.5
-##  [19] 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2
-##  [37] 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2 3.1 2.3
-##  [55] 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7 2.2 2.5 3.2 2.8
-##  [73] 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5
-##  [91] 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9 3.0 3.0 2.5 2.9
-## [109] 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2
-## [127] 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2
-## [145] 3.3 3.0 2.5 3.0 3.4 3.0</code></pre>
-<pre class="r"><code>iris[2]     # sortie : un data frame</code></pre>
-<pre><code>##     Sepal.Width
-## 1           3.5
-## 2           3.0
-## 3           3.2
-## 4           3.1
-## 5           3.6
-## 6           3.9
-## 7           3.4
-## 8           3.4
-## 9           2.9
-## 10          3.1
-## 11          3.7
-## 12          3.4
-## 13          3.0
-## 14          3.0
-## 15          4.0
-## 16          4.4
-## 17          3.9
-## 18          3.5
-## 19          3.8
-## 20          3.8
-## 21          3.4
-## 22          3.7
-## 23          3.6
-## 24          3.3
-## 25          3.4
-## 26          3.0
-## 27          3.4
-## 28          3.5
-## 29          3.4
-## 30          3.2
-## 31          3.1
-## 32          3.4
-## 33          4.1
-## 34          4.2
-## 35          3.1
-## 36          3.2
-## 37          3.5
-## 38          3.6
-## 39          3.0
-## 40          3.4
-## 41          3.5
-## 42          2.3
-## 43          3.2
-## 44          3.5
-## 45          3.8
-## 46          3.0
-## 47          3.8
-## 48          3.2
-## 49          3.7
-## 50          3.3
-## 51          3.2
-## 52          3.2
-## 53          3.1
-## 54          2.3
-## 55          2.8
-## 56          2.8
-## 57          3.3
-## 58          2.4
-## 59          2.9
-## 60          2.7
-## 61          2.0
-## 62          3.0
-## 63          2.2
-## 64          2.9
-## 65          2.9
-## 66          3.1
-## 67          3.0
-## 68          2.7
-## 69          2.2
-## 70          2.5
-## 71          3.2
-## 72          2.8
-## 73          2.5
-## 74          2.8
-## 75          2.9
-## 76          3.0
-## 77          2.8
-## 78          3.0
-## 79          2.9
-## 80          2.6
-## 81          2.4
-## 82          2.4
-## 83          2.7
-## 84          2.7
-## 85          3.0
-## 86          3.4
-## 87          3.1
-## 88          2.3
-## 89          3.0
-## 90          2.5
-## 91          2.6
-## 92          3.0
-## 93          2.6
-## 94          2.3
-## 95          2.7
-## 96          3.0
-## 97          2.9
-## 98          2.9
-## 99          2.5
-## 100         2.8
-## 101         3.3
-## 102         2.7
-## 103         3.0
-## 104         2.9
-## 105         3.0
-## 106         3.0
-## 107         2.5
-## 108         2.9
-## 109         2.5
-## 110         3.6
-## 111         3.2
-## 112         2.7
-## 113         3.0
-## 114         2.5
-## 115         2.8
-## 116         3.2
-## 117         3.0
-## 118         3.8
-## 119         2.6
-## 120         2.2
-## 121         3.2
-## 122         2.8
-## 123         2.8
-## 124         2.7
-## 125         3.3
-## 126         3.2
-## 127         2.8
-## 128         3.0
-## 129         2.8
-## 130         3.0
-## 131         2.8
-## 132         3.8
-## 133         2.8
-## 134         2.8
-## 135         2.6
-## 136         3.0
-## 137         3.4
-## 138         3.1
-## 139         3.0
-## 140         3.1
-## 141         3.1
-## 142         3.1
-## 143         2.7
-## 144         3.2
-## 145         3.3
-## 146         3.0
-## 147         2.5
-## 148         3.0
-## 149         3.4
-## 150         3.0</code></pre>
-<pre class="r"><code>iris$Sepal.Width    # sortie : un vecteur</code></pre>
-<pre><code>##   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9 3.5
-##  [19] 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2
-##  [37] 3.5 3.6 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2 3.1 2.3
-##  [55] 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7 2.2 2.5 3.2 2.8
-##  [73] 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5
-##  [91] 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9 3.0 3.0 2.5 2.9
-## [109] 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2
-## [127] 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2
-## [145] 3.3 3.0 2.5 3.0 3.4 3.0</code></pre>
-<pre class="r"><code>iris[,c(2,3)]</code></pre>
-<pre><code>##     Sepal.Width Petal.Length
-## 1           3.5          1.4
-## 2           3.0          1.4
-## 3           3.2          1.3
-## 4           3.1          1.5
-## 5           3.6          1.4
-## 6           3.9          1.7
-## 7           3.4          1.4
-## 8           3.4          1.5
-## 9           2.9          1.4
-## 10          3.1          1.5
-## 11          3.7          1.5
-## 12          3.4          1.6
-## 13          3.0          1.4
-## 14          3.0          1.1
-## 15          4.0          1.2
-## 16          4.4          1.5
-## 17          3.9          1.3
-## 18          3.5          1.4
-## 19          3.8          1.7
-## 20          3.8          1.5
-## 21          3.4          1.7
-## 22          3.7          1.5
-## 23          3.6          1.0
-## 24          3.3          1.7
-## 25          3.4          1.9
-## 26          3.0          1.6
-## 27          3.4          1.6
-## 28          3.5          1.5
-## 29          3.4          1.4
-## 30          3.2          1.6
-## 31          3.1          1.6
-## 32          3.4          1.5
-## 33          4.1          1.5
-## 34          4.2          1.4
-## 35          3.1          1.5
-## 36          3.2          1.2
-## 37          3.5          1.3
-## 38          3.6          1.4
-## 39          3.0          1.3
-## 40          3.4          1.5
-## 41          3.5          1.3
-## 42          2.3          1.3
-## 43          3.2          1.3
-## 44          3.5          1.6
-## 45          3.8          1.9
-## 46          3.0          1.4
-## 47          3.8          1.6
-## 48          3.2          1.4
-## 49          3.7          1.5
-## 50          3.3          1.4
-## 51          3.2          4.7
-## 52          3.2          4.5
-## 53          3.1          4.9
-## 54          2.3          4.0
-## 55          2.8          4.6
-## 56          2.8          4.5
-## 57          3.3          4.7
-## 58          2.4          3.3
-## 59          2.9          4.6
-## 60          2.7          3.9
-## 61          2.0          3.5
-## 62          3.0          4.2
-## 63          2.2          4.0
-## 64          2.9          4.7
-## 65          2.9          3.6
-## 66          3.1          4.4
-## 67          3.0          4.5
-## 68          2.7          4.1
-## 69          2.2          4.5
-## 70          2.5          3.9
-## 71          3.2          4.8
-## 72          2.8          4.0
-## 73          2.5          4.9
-## 74          2.8          4.7
-## 75          2.9          4.3
-## 76          3.0          4.4
-## 77          2.8          4.8
-## 78          3.0          5.0
-## 79          2.9          4.5
-## 80          2.6          3.5
-## 81          2.4          3.8
-## 82          2.4          3.7
-## 83          2.7          3.9
-## 84          2.7          5.1
-## 85          3.0          4.5
-## 86          3.4          4.5
-## 87          3.1          4.7
-## 88          2.3          4.4
-## 89          3.0          4.1
-## 90          2.5          4.0
-## 91          2.6          4.4
-## 92          3.0          4.6
-## 93          2.6          4.0
-## 94          2.3          3.3
-## 95          2.7          4.2
-## 96          3.0          4.2
-## 97          2.9          4.2
-## 98          2.9          4.3
-## 99          2.5          3.0
-## 100         2.8          4.1
-## 101         3.3          6.0
-## 102         2.7          5.1
-## 103         3.0          5.9
-## 104         2.9          5.6
-## 105         3.0          5.8
-## 106         3.0          6.6
-## 107         2.5          4.5
-## 108         2.9          6.3
-## 109         2.5          5.8
-## 110         3.6          6.1
-## 111         3.2          5.1
-## 112         2.7          5.3
-## 113         3.0          5.5
-## 114         2.5          5.0
-## 115         2.8          5.1
-## 116         3.2          5.3
-## 117         3.0          5.5
-## 118         3.8          6.7
-## 119         2.6          6.9
-## 120         2.2          5.0
-## 121         3.2          5.7
-## 122         2.8          4.9
-## 123         2.8          6.7
-## 124         2.7          4.9
-## 125         3.3          5.7
-## 126         3.2          6.0
-## 127         2.8          4.8
-## 128         3.0          4.9
-## 129         2.8          5.6
-## 130         3.0          5.8
-## 131         2.8          6.1
-## 132         3.8          6.4
-## 133         2.8          5.6
-## 134         2.8          5.1
-## 135         2.6          5.6
-## 136         3.0          6.1
-## 137         3.4          5.6
-## 138         3.1          5.5
-## 139         3.0          4.8
-## 140         3.1          5.4
-## 141         3.1          5.6
-## 142         3.1          5.1
-## 143         2.7          5.1
-## 144         3.2          5.9
-## 145         3.3          5.7
-## 146         3.0          5.2
-## 147         2.5          5.0
-## 148         3.0          5.2
-## 149         3.4          5.4
-## 150         3.0          5.1</code></pre>
-<div id="exercice-6" class="section level3">
-<h3>Exercice 6</h3>
-<ol style="list-style-type: decimal">
-<li><p>Charger le jeu de données mtcars grâce à la commande suivante :
-<em>data(mtcars)</em>.</p></li>
-<li><p>Vérifier le type de l’objet mtcars : est-ce une matrice ? un data
-frame ? une liste ?</p></li>
-<li><p>Donner les dimensions du jeu de données, ainsi que le nom des
-variables.</p></li>
-<li><p>Chercher des informations sur le jeu de données dans la
-documentation (avec <em>help()</em> ou <em>?</em>). Quelles sont les
-variables qualitatives ? quantitatives ?</p></li>
-<li><p>Faire le <em>summary</em> du jeu de données. Changer les colonnes
-des variables qualitatives en facteurs.</p></li>
-<li><p>Sélectionner, de deux façons différentes, la première colonne du
-jeu de données. Isoler ensuite les 10 premiers éléments de cette
-colonne, puis les 10 derniers.</p></li>
-<li><p>Stocker la colonne mpg dans une variable, et la colonne am dans
-une autre. Utiliser la fonction <em>cbind()</em> pour les rassembler en
-un seul objet. Quel est le type de l’objet obtenu ?</p></li>
-<li><p>Reprendre le tableau précédent ; en sélectionner les lignes 1 à 7
-de la deuxième colonne.</p></li>
-<li><p>Revenir au jeu de données de base. Afficher uniquement les poids
-des véhicules à transmission manuelle.</p></li>
-<li><p>Calculer, pour chaque type de transmission, la moyenne
-(<em>mean</em>) et l’écart-type (<em>sd</em>) du poids des
-véhicules.</p></li>
-</ol>
+fact = function(n){
+  if (n != as.integer(n)){
+    warning(&quot;Nombre décimal, arrondi à l&#39;entier le plus proche \n&quot;)
+    n = floor(n)
+  }
+  if (n == 0){
+    return(1)
+  }
+  if (n &lt; 0){
+    stop(&#39;Factorielle non définie pour des nombres négatifs&#39;)
+  }
+  k = 1
+  for (i in c(1:n)){
+    k = k*i
+  }
+  return(k)
+}
+
+fact(0)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>fact(5)</code></pre>
+<pre><code>## [1] 120</code></pre>
+<pre class="r"><code>fact(4.3)</code></pre>
+<pre><code>## Warning in fact(4.3): Nombre décimal, arrondi à l&#39;entier le plus proche</code></pre>
+<pre><code>## [1] 24</code></pre>
+<pre class="r"><code>fact(-1)</code></pre>
+<pre><code>## Error in fact(-1): Factorielle non définie pour des nombres négatifs</code></pre>
 </div>
 </div>
 
