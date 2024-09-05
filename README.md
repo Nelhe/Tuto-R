@@ -18,7 +18,7 @@ La majorité des exemples et exercices de TD sont reconstitués à partir des co
 La partie GGplot du TD graphiques s'appuie sur l'excellent tutoriel de Laurent Rouvière, accessible [ici](https://rouviere.pages.math.cnrs.fr/TUTO_R/) et proposant plusieurs autres thèmes intéressants.
 
 # Ajouts futurs (selon besoins)
-[] TD sur l'aléatoire et les distributions de proba
-[] TD sur les fonctions de FactoMineR
-[] Partie du guide et TD sur le tidyverse et dplyr (en attendant, je vous réfère à [ce super tutoriel](https://rouviere.pages.math.cnrs.fr/TUTO_R/03-dplyr.html) de Laurent Rouvière)
-[] Revoir l'apparence de tous ces documents pour les rendre plus esthétiques (conversion en Quarto ?)
+[ ] TD sur l'aléatoire et les distributions de proba
+[ ] TD sur les fonctions de FactoMineR
+[ ] Partie du guide et TD sur le tidyverse et dplyr (en attendant, je vous réfère à [ce super tutoriel](https://rouviere.pages.math.cnrs.fr/TUTO_R/03-dplyr.html) de Laurent Rouvière)
+[ ] Revoir l'apparence de tous ces documents pour les rendre plus esthétiques (conversion en Quarto ?)
