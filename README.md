@@ -14,6 +14,7 @@ Chaque TD est disponible au format HTML (pour une jolie présentation) et au for
 # Références
 
 La majorité des exemples et exercices de TD sont reconstitués à partir des cours dispensés en Master 1 par Marie Du Roy De Chaumaray. À sa demande, les parties concernées peuvent être éditées.
+
 La partie GGplot du TD graphiques s'appuie sur l'excellent tutoriel de Laurent Rouvière, accessible [ici](https://rouviere.pages.math.cnrs.fr/TUTO_R/) et proposant plusieurs autres thèmes intéressants.
 
 # Ajouts futurs (selon besoins)
